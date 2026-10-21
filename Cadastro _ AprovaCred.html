@@ -1,0 +1,308 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cadastro | AprovaCred</title>
+<meta name="description" content="Preencha seu cadastro e receba o retorno de um consultor da AprovaCred.">
+<style>
+:root{
+  --azul:#0b3d91;--azul-escuro:#082a66;--verde:#18b26b;--verde-escuro:#119355;
+  --bg:#f4f7fb;--texto:#1c2433;--cinza:#5b6578;--erro:#d93025;--raio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Roboto,Arial,sans-serif;color:var(--texto);background:var(--bg);line-height:1.55;min-height:100vh}
+a{text-decoration:none;color:inherit}
+header{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1100px;margin:0 auto;padding:0 20px}
+.logo{font-weight:800;font-size:1.4rem;color:var(--azul)}
+.logo span{color:var(--verde)}
+.voltar{color:var(--azul);font-weight:600;font-size:.9rem}
+
+.topo{background:linear-gradient(160deg,var(--azul),var(--azul-escuro));color:#fff;padding:36px 20px 70px;text-align:center}
+.topo h1{font-size:1.7rem;margin-bottom:8px}
+.topo p{opacity:.92;max-width:520px;margin:0 auto}
+
+.caixa{max-width:520px;margin:-44px auto 40px;padding:0 16px}
+.form,.sucesso{background:#fff;border-radius:var(--raio);padding:26px;box-shadow:0 12px 30px rgba(11,61,145,.18)}
+.resumo{background:var(--bg);border-radius:12px;padding:12px 16px;margin-bottom:18px;font-size:.92rem;color:var(--cinza);display:none}
+.resumo strong{color:var(--azul)}
+.campo{margin-bottom:16px}
+label{display:block;font-weight:600;font-size:.9rem;margin-bottom:6px}
+input[type=text],input[type=email],input[type=tel],input[type=date]{width:100%;padding:13px;border:1.5px solid #cdd5e2;border-radius:10px;font-size:1rem;font-family:inherit;background:#fff}
+input[type=date]{-webkit-appearance:none;appearance:none;min-width:0;max-width:100%;display:block;text-align:left;min-height:50px}
+input[type=date]::-webkit-date-and-time-value{text-align:left}
+input:focus{outline:none;border-color:var(--azul)}
+.campo.invalido input{border-color:var(--erro)}
+.msg{display:none;color:var(--erro);font-size:.8rem;margin-top:4px}
+.campo.invalido .msg{display:block}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:.82rem;color:var(--cinza);margin:6px 0 18px}
+.check input{margin-top:3px;accent-color:var(--verde);width:18px;height:18px;flex:0 0 18px}
+.check.invalido{color:var(--erro)}
+.btn{display:block;width:100%;background:var(--verde);color:#fff;font-weight:700;padding:15px;border-radius:50px;border:0;cursor:pointer;font-size:1.05rem;transition:.2s;text-align:center}
+.btn:hover{background:var(--verde-escuro)}
+.btn:disabled{opacity:.6;cursor:wait}
+.seguro{text-align:center;font-size:.78rem;color:var(--cinza);margin-top:12px}
+.erro-geral{display:none;background:#fdecea;color:var(--erro);padding:12px;border-radius:10px;font-size:.88rem;margin-bottom:14px}
+
+.carregando{display:none;background:#fff;border-radius:var(--raio);padding:34px 26px;box-shadow:0 12px 30px rgba(11,61,145,.18);text-align:center}
+.spinner{width:64px;height:64px;border:6px solid #e3e9f4;border-top-color:var(--verde);border-radius:50%;margin:0 auto 18px;animation:gira 1s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+.carregando h2{color:var(--azul);margin-bottom:6px}
+.carregando > p{color:var(--cinza);font-size:.92rem;margin-bottom:20px}
+.barra{height:8px;background:#e3e9f4;border-radius:50px;overflow:hidden;margin-bottom:22px}
+.barra div{height:100%;width:0;background:linear-gradient(90deg,var(--azul),var(--verde));border-radius:50px;transition:width .6s ease}
+.etapas{list-style:none;text-align:left;max-width:300px;margin:0 auto}
+.etapas li{display:flex;gap:10px;align-items:center;padding:8px 0;color:#9aa5b8;font-size:.95rem;transition:.3s}
+.etapas li .bola{width:22px;height:22px;border-radius:50%;border:2px solid #cdd5e2;display:flex;align-items:center;justify-content:center;font-size:.75rem;flex:0 0 22px}
+.etapas li.ativa{color:var(--azul);font-weight:600}
+.etapas li.ativa .bola{border-color:var(--azul)}
+.etapas li.feita{color:var(--verde-escuro)}
+.etapas li.feita .bola{background:var(--verde);border-color:var(--verde);color:#fff}
+.sucesso{display:none;text-align:center}
+.sucesso .ok{font-size:3rem}
+.sucesso h2{color:var(--azul);margin:8px 0}
+.sucesso p{color:var(--cinza);margin-bottom:12px}
+.sucesso .btn{margin-top:16px;background:#25d366}
+.aviso{font-size:.75rem;color:var(--cinza);text-align:center;margin-top:16px}
+footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="index.html" class="logo">Aprova<span>Cred</span></a>
+    <a href="index.html" class="voltar">← Voltar</a>
+  </div>
+</header>
+
+<div class="topo">
+  <h1>Faça seu cadastro</h1>
+  <p>Preencha seus dados. Um consultor vai analisar o seu perfil e retornar o contato.</p>
+</div>
+
+<div class="caixa">
+  <form class="form" id="form" novalidate>
+    <div class="resumo" id="resumo"></div>
+    <div class="erro-geral" id="erroGeral"></div>
+
+    <div class="campo" id="c-nome">
+      <label for="nome">Nome completo</label>
+      <input type="text" id="nome" autocomplete="name" placeholder="Seu nome completo">
+      <div class="msg">Informe nome e sobrenome.</div>
+    </div>
+
+    <div class="campo" id="c-cpf">
+      <label for="cpf">CPF</label>
+      <input type="text" id="cpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00">
+      <div class="msg">CPF inválido.</div>
+    </div>
+
+    <div class="campo" id="c-nasc">
+      <label for="nasc">Data de nascimento</label>
+      <input type="date" id="nasc" autocomplete="bday">
+      <div class="msg" id="msgNasc">Informe uma data válida (maiores de 18 anos).</div>
+    </div>
+
+    <div class="campo" id="c-email">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" autocomplete="email" placeholder="voce@email.com">
+      <div class="msg">Informe um e-mail válido.</div>
+    </div>
+
+    <div class="campo" id="c-tel">
+      <label for="tel">Telefone / WhatsApp</label>
+      <input type="tel" id="tel" inputmode="numeric" maxlength="15" autocomplete="tel" placeholder="(00) 00000-0000">
+      <div class="msg">Informe DDD e número válidos.</div>
+    </div>
+
+    <div class="check" id="c-lgpd">
+      <input type="checkbox" id="lgpd">
+      <label for="lgpd" style="font-weight:400;margin:0">Concordo que a AprovaCred use meus dados para analisar meu pedido de crédito e entrar em contato, conforme a LGPD.</label>
+    </div>
+
+    <button type="submit" class="btn" id="enviar">Enviar cadastro</button>
+    <p class="seguro">🔒 Seus dados são usados apenas para a análise do seu pedido.</p>
+  </form>
+
+  <div class="carregando" id="carregando">
+    <div class="spinner"></div>
+    <h2>Processando seu cadastro</h2>
+    <p>Aguarde um instante, não feche esta página.</p>
+    <div class="barra"><div id="progresso"></div></div>
+    <ul class="etapas">
+      <li id="e1"><span class="bola">✓</span>Validando seus dados</li>
+      <li id="e2"><span class="bola">✓</span>Enviando seu cadastro</li>
+      <li id="e3"><span class="bola">✓</span>Encaminhando para a análise</li>
+    </ul>
+  </div>
+
+  <div class="sucesso" id="sucesso">
+    <div class="ok">✅</div>
+    <h2>Cadastro recebido!</h2>
+    <p>Obrigado, <strong id="sNome"></strong>. Recebemos seus dados e nossa equipe vai analisar o seu perfil.</p>
+    <p>Um consultor entrará em contato pelo telefone ou e-mail informados para falar sobre as condições disponíveis.</p>
+    <a href="#" class="btn" id="btnZap" target="_blank" rel="noopener">Falar agora no WhatsApp</a>
+    <p class="aviso">O recebimento do cadastro não significa aprovação. O crédito está sujeito à análise e aprovação.</p>
+  </div>
+</div>
+
+<footer>
+  AprovaCred • [Razão social] • CNPJ 00.000.000/0001-00<br>
+  Crédito sujeito à análise e aprovação.
+</footer>
+
+<script>
+  // >>> CONFIGURE ANTES DE PUBLICAR
+  // 1) Crie um formulário gratuito em formspree.io e cole aqui a URL (https://formspree.io/f/xxxxxxx)
+  const FORM_ENDPOINT = "https://formspree.io/f/SEU_ID_AQUI";
+  // 2) Seu WhatsApp (DDI+DDD+número, só dígitos)
+  const WHATSAPP = "5562999999999";
+
+  const $ = id => document.getElementById(id);
+  const params = new URLSearchParams(location.search);
+
+  // Resumo do pedido vindo do simulador / da página de negativados
+  (function(){
+    const r = $('resumo'), v = +params.get('valor'), n = +params.get('parcelas');
+    if (v && n){
+      r.innerHTML = `Seu pedido: <strong>${v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0})}</strong> em <strong>${n}x</strong>`;
+      r.style.display = 'block';
+    } else if (params.get('tipo') === 'negativados'){
+      r.innerHTML = 'Interesse: <strong>Crédito para negativados</strong>';
+      r.style.display = 'block';
+    }
+  })();
+
+  // Máscaras
+  $('cpf').addEventListener('input', e => {
+    let v = e.target.value.replace(/\D/g,'').slice(0,11);
+    v = v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2');
+    e.target.value = v;
+  });
+  $('tel').addEventListener('input', e => {
+    let v = e.target.value.replace(/\D/g,'').slice(0,11);
+    if (v.length > 10) v = v.replace(/(\d{2})(\d{5})(\d{4})/,'($1) $2-$3');
+    else if (v.length > 6) v = v.replace(/(\d{2})(\d{4})(\d{0,4})/,'($1) $2-$3');
+    else if (v.length > 2) v = v.replace(/(\d{2})(\d+)/,'($1) $2');
+    e.target.value = v;
+  });
+
+  // Validações
+  function cpfValido(cpf){
+    cpf = cpf.replace(/\D/g,'');
+    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+    for (let t = 9; t < 11; t++){
+      let soma = 0;
+      for (let i = 0; i < t; i++) soma += +cpf[i] * (t + 1 - i);
+      const dig = ((soma * 10) % 11) % 10;
+      if (dig !== +cpf[t]) return false;
+    }
+    return true;
+  }
+  function maiorDeIdade(data){
+    if (!data) return false;
+    const n = new Date(data), hoje = new Date();
+    if (isNaN(n) || n > hoje || n.getFullYear() < 1900) return false;
+    let idade = hoje.getFullYear() - n.getFullYear();
+    const m = hoje.getMonth() - n.getMonth();
+    if (m < 0 || (m === 0 && hoje.getDate() < n.getDate())) idade--;
+    return idade >= 18 && idade <= 110;
+  }
+  function marcar(id, ok){
+    $(id).classList.toggle('invalido', !ok);
+    return ok;
+  }
+
+  $('form').addEventListener('submit', async e => {
+    e.preventDefault();
+    $('erroGeral').style.display = 'none';
+
+    const nome = $('nome').value.trim().replace(/\s+/g,' ');
+    const ok = [
+      marcar('c-nome', nome.split(' ').length >= 2 && nome.length >= 5),
+      marcar('c-cpf', cpfValido($('cpf').value)),
+      marcar('c-nasc', maiorDeIdade($('nasc').value)),
+      marcar('c-email', /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test($('email').value.trim())),
+      marcar('c-tel', $('tel').value.replace(/\D/g,'').length >= 10),
+      marcar('c-lgpd', $('lgpd').checked)
+    ].every(Boolean);
+    if (!ok){
+      const primeiro = document.querySelector('.invalido');
+      if (primeiro) primeiro.scrollIntoView({behavior:'smooth',block:'center'});
+      return;
+    }
+
+    if (FORM_ENDPOINT.includes('SEU_ID_AQUI')){
+      $('erroGeral').textContent = 'Formulário ainda não configurado: defina FORM_ENDPOINT no arquivo cadastro.html.';
+      $('erroGeral').style.display = 'block';
+      return;
+    }
+
+    const dados = {
+      nome,
+      cpf: $('cpf').value,
+      nascimento: $('nasc').value,
+      email: $('email').value.trim(),
+      telefone: $('tel').value,
+      valor_solicitado: params.get('valor') || '',
+      parcelas: params.get('parcelas') || '',
+      interesse: params.get('tipo') || '',
+      consentimento_lgpd: 'sim',
+      enviado_em: new Date().toLocaleString('pt-BR')
+    };
+
+    // Tela de carregamento: cada etapa corresponde a algo que realmente acontece
+    const espera = ms => new Promise(r => setTimeout(r, ms));
+    const etapa = (n, pct) => {
+      for (let i = 1; i <= 3; i++){
+        const li = $('e' + i);
+        li.className = i < n ? 'feita' : (i === n ? 'ativa' : '');
+      }
+      $('progresso').style.width = pct + '%';
+    };
+
+    $('form').style.display = 'none';
+    $('carregando').style.display = 'block';
+    window.scrollTo({top:0,behavior:'smooth'});
+    const inicio = Date.now();
+
+    try{
+      etapa(1, 20);
+      await espera(900);
+
+      etapa(2, 55);
+      const r = await fetch(FORM_ENDPOINT, {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify(dados)
+      });
+      if (!r.ok) throw new Error('falha');
+      await espera(900);
+
+      etapa(3, 90);
+      await espera(Math.max(900, 3600 - (Date.now() - inicio)));
+
+      etapa(4, 100);
+      await espera(500);
+
+      $('carregando').style.display = 'none';
+      $('sNome').textContent = nome.split(' ')[0];
+      $('btnZap').href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent('Olá! Acabei de enviar meu cadastro no site. Meu nome é ' + nome + '.')}`;
+      $('sucesso').style.display = 'block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    }catch(err){
+      $('carregando').style.display = 'none';
+      $('form').style.display = 'block';
+      $('erroGeral').textContent = 'Não foi possível enviar agora. Tente novamente em instantes.';
+      $('erroGeral').style.display = 'block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+  });
+</script>
+</body>
+</html>
+
+</body></html>

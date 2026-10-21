@@ -1,0 +1,268 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AprovaCred | Crédito e Empréstimo Rápido</title>
+<meta name="description" content="Empréstimo e crédito com análise rápida, sem burocracia e atendimento direto pelo WhatsApp.">
+<style>
+:root{
+  --azul:#0b3d91;
+  --azul-escuro:#082a66;
+  --verde:#18b26b;
+  --verde-escuro:#119355;
+  --bg:#f4f7fb;
+  --texto:#1c2433;
+  --cinza:#5b6578;
+  --branco:#fff;
+  --raio:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',Roboto,Arial,sans-serif;color:var(--texto);background:var(--bg);line-height:1.55}
+a{text-decoration:none;color:inherit}
+.container{width:100%;max-width:1100px;margin:0 auto;padding:0 20px}
+
+header{background:var(--branco);position:sticky;top:0;z-index:10;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-weight:800;font-size:1.4rem;color:var(--azul)}
+.logo span{color:var(--verde)}
+.btn{display:inline-block;background:var(--verde);color:#fff;font-weight:700;padding:14px 26px;border-radius:50px;border:0;cursor:pointer;font-size:1rem;transition:.2s;text-align:center}
+.btn:hover{background:var(--verde-escuro);transform:translateY(-2px)}
+.btn-sm{padding:10px 20px;font-size:.9rem}
+.btn-outline{background:transparent;border:2px solid #fff}
+.btn-outline:hover{background:#fff;color:var(--azul)}
+
+.hero{background:linear-gradient(160deg,var(--azul) 0%,var(--azul-escuro) 100%);color:#fff;padding:48px 0 64px}
+.hero-grid{display:grid;gap:32px;align-items:center}
+.hero h1{font-size:2rem;line-height:1.2;margin-bottom:14px}
+.hero h1 em{font-style:normal;color:#5ee9a8}
+.hero p{font-size:1.05rem;opacity:.92;margin-bottom:22px}
+.selos{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;font-size:.9rem}
+.selos span{background:rgba(255,255,255,.12);padding:6px 14px;border-radius:50px}
+
+.sim{background:#fff;color:var(--texto);border-radius:var(--raio);padding:26px;box-shadow:0 12px 30px rgba(0,0,0,.25)}
+.sim h2{font-size:1.2rem;color:var(--azul);margin-bottom:16px}
+.sim label{display:block;font-weight:600;font-size:.9rem;margin:14px 0 6px}
+.sim output{display:block;font-size:1.6rem;font-weight:800;color:var(--azul)}
+.sim input[type=range]{width:100%;accent-color:var(--verde)}
+.sim select{width:100%;padding:12px;border:1px solid #cdd5e2;border-radius:10px;font-size:1rem}
+.resultado{background:var(--bg);border-radius:12px;padding:16px;margin:18px 0;text-align:center}
+.resultado small{color:var(--cinza)}
+.resultado strong{display:block;font-size:1.7rem;color:var(--verde-escuro)}
+.sim .btn{width:100%}
+.aviso{font-size:.75rem;color:var(--cinza);margin-top:10px;text-align:center}
+
+section{padding:56px 0}
+.titulo{text-align:center;margin-bottom:34px}
+.titulo h2{font-size:1.7rem;color:var(--azul)}
+.titulo p{color:var(--cinza);margin-top:6px}
+.cards{display:grid;gap:18px}
+.card{background:#fff;border-radius:var(--raio);padding:26px;box-shadow:0 4px 14px rgba(11,61,145,.08)}
+.card .ico{font-size:2rem;margin-bottom:10px}
+.card h3{color:var(--azul);margin-bottom:6px}
+.card p{color:var(--cinza);font-size:.95rem}
+
+.destaque{background:linear-gradient(160deg,var(--azul),var(--azul-escuro));color:#fff;border-radius:var(--raio);padding:34px 26px;box-shadow:0 10px 26px rgba(11,61,145,.25)}
+.destaque .tag{display:inline-block;background:var(--verde);color:#fff;font-size:.75rem;font-weight:800;padding:5px 12px;border-radius:50px;margin-bottom:12px;letter-spacing:.5px}
+.destaque h2{font-size:1.8rem;margin-bottom:10px}
+.destaque p{opacity:.93;margin-bottom:14px}
+.destaque ul{list-style:none;margin-bottom:22px}
+.destaque li{margin-bottom:6px}
+.destaque .aviso-neg{font-size:.78rem;opacity:.8;margin:12px 0 0}
+.passos{background:#fff}
+.passo{display:flex;gap:16px;align-items:flex-start;margin-bottom:22px}
+.num{flex:0 0 44px;height:44px;border-radius:50%;background:var(--verde);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
+.passo h3{color:var(--azul)}
+.passo p{color:var(--cinza);font-size:.95rem}
+
+.faq details{background:#fff;border-radius:12px;padding:16px 20px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.faq summary{font-weight:700;color:var(--azul);cursor:pointer}
+.faq p{margin-top:10px;color:var(--cinza);font-size:.95rem}
+
+.cta{background:linear-gradient(160deg,var(--azul),var(--azul-escuro));color:#fff;text-align:center}
+.cta h2{font-size:1.7rem;margin-bottom:10px}
+.cta p{opacity:.92;margin-bottom:22px}
+
+footer{background:#061d47;color:#b8c4dc;padding:30px 0;font-size:.85rem;text-align:center}
+footer p{margin-bottom:8px}
+
+.whats{position:fixed;right:18px;bottom:18px;background:#25d366;color:#fff;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;box-shadow:0 6px 16px rgba(0,0,0,.3);z-index:20}
+
+@media(min-width:800px){
+  .hero{padding:80px 0}
+  .hero-grid{grid-template-columns:1.2fr 1fr}
+  .hero h1{font-size:2.8rem}
+  .cards{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">Aprova<span>Cred</span></a>
+    <a href="#" class="btn btn-sm js-whats">Falar no WhatsApp</a>
+  </div>
+</header>
+
+<main>
+<section class="hero" style="padding-bottom:64px">
+  <div class="container hero-grid">
+    <div>
+      <h1>Dinheiro na conta <em>rápido</em> e sem complicação</h1>
+      <p>Empréstimo pessoal, consignado, crédito com garantia e crédito para negativados. Simule agora e fale direto com um consultor pelo WhatsApp.</p>
+      <a href="#simulador" class="btn">Quero simular agora</a>
+      <div class="selos">
+        <span>✔ Sem burocracia</span>
+        <span>✔ Análise rápida</span>
+        <span>✔ Atendimento humano</span>
+      </div>
+    </div>
+
+    <div class="sim" id="simulador">
+      <h2>Simule seu empréstimo</h2>
+      <label for="valor">Quanto você precisa?</label>
+      <output id="valorOut">R$ 5.000</output>
+      <input type="range" id="valor" min="500" max="50000" step="500" value="5000">
+
+      <label for="parcelas">Em quantas parcelas?</label>
+      <select id="parcelas">
+        <option value="6">6x</option>
+        <option value="12" selected>12x</option>
+        <option value="24">24x</option>
+        <option value="36">36x</option>
+        <option value="48">48x</option>
+      </select>
+
+      <div class="resultado">
+        <small>Parcela estimada</small>
+        <strong id="parcelaOut">—</strong>
+      </div>
+      <a href="cadastro.html" class="btn" id="btnSim">Solicitar crédito</a>
+      <p class="aviso">Simulação ilustrativa. Taxas e condições finais dependem de análise de crédito.</p>
+    </div>
+  </div>
+</section>
+
+<section id="vantagens">
+  <div class="container">
+    <div class="titulo">
+      <h2>Por que escolher a AprovaCred?</h2>
+      <p>Crédito de verdade, do jeito que você precisa.</p>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="ico">⚡</div><h3>Resposta rápida</h3><p>Análise ágil e retorno pelo WhatsApp, sem fila e sem papelada demais.</p></div>
+      <div class="card"><div class="ico">🤝</div><h3>Atendimento próximo</h3><p>Você conversa com uma pessoa de verdade que explica tudo com clareza.</p></div>
+      <div class="card"><div class="ico">🔒</div><h3>Segurança</h3><p>Seus dados são protegidos e usados somente para a análise do seu crédito.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="produtos" style="padding-top:0">
+  <div class="container">
+    <div class="titulo">
+      <h2>Soluções de crédito</h2>
+      <p>Escolha a opção ideal para o seu momento.</p>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="ico">💵</div><h3>Empréstimo pessoal</h3><p>Dinheiro para quitar dívidas, fazer reforma ou realizar um projeto.</p></div>
+      <div class="card"><div class="ico">🏛️</div><h3>Consignado</h3><p>Taxas menores para aposentados, pensionistas e servidores.</p></div>
+      <div class="card"><div class="ico">🚗</div><h3>Crédito com garantia</h3><p>Use seu veículo ou imóvel como garantia e consiga mais crédito.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="negativados" style="padding-top:0">
+  <div class="container">
+    <div class="destaque">
+      <div>
+        <span class="tag">NOME SUJO NÃO É O FIM</span>
+        <h2>Crédito para negativados</h2>
+        <p>Está com restrição no CPF? Analisamos o seu caso com atenção e buscamos a melhor alternativa para você, como crédito com garantia de veículo ou imóvel e consignado, conforme o seu perfil.</p>
+        <ul>
+          <li>✔ Análise individual do seu perfil</li>
+          <li>✔ Opções com garantia para quem tem restrição</li>
+          <li>✔ Atendimento direto e sem julgamento</li>
+        </ul>
+        <a href="cadastro.html?tipo=negativados" class="btn" id="btnNeg">Analisar meu caso</a>
+        <p class="aviso-neg">Sujeito a análise e aprovação de crédito. A aprovação não é garantida.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="passos" id="como-funciona">
+  <div class="container">
+    <div class="titulo"><h2>Como funciona</h2><p>Em 3 passos simples.</p></div>
+    <div class="passo"><div class="num">1</div><div><h3>Faça sua simulação</h3><p>Escolha o valor e o prazo aqui no site.</p></div></div>
+    <div class="passo"><div class="num">2</div><div><h3>Fale com um consultor</h3><p>Envie seus dados pelo WhatsApp para a análise.</p></div></div>
+    <div class="passo"><div class="num">3</div><div><h3>Receba na sua conta</h3><p>Aprovado, o valor é liberado conforme o contrato.</p></div></div>
+  </div>
+</section>
+
+<section class="faq" id="duvidas">
+  <div class="container" style="max-width:760px">
+    <div class="titulo"><h2>Dúvidas frequentes</h2></div>
+    <details><summary>Preciso ter o nome limpo?</summary><p>Não necessariamente. Temos opções para negativados, como crédito com garantia, mas tudo depende da análise do seu perfil. Fale com um consultor.</p></details>
+    <details><summary>Quais documentos são necessários?</summary><p>Normalmente documento com foto, comprovante de renda e comprovante de residência.</p></details>
+    <details><summary>Em quanto tempo o dinheiro cai?</summary><p>O prazo varia conforme a análise e a modalidade escolhida; o consultor informa na hora.</p></details>
+    <details><summary>A simulação do site é o valor final?</summary><p>Não. É uma estimativa. Taxa e parcela finais são definidas após a análise de crédito.</p></details>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <h2>Pronto para conseguir seu crédito?</h2>
+    <p>Faça seu cadastro em poucos minutos e receba o retorno de um consultor.</p>
+    <a href="cadastro.html" class="btn">Fazer meu cadastro</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <p><strong>AprovaCred</strong> — Crédito e Empréstimos</p>
+    <p>[Razão social] • CNPJ 00.000.000/0001-00</p>
+    <p>As condições, taxas e prazos estão sujeitos à análise de crédito e aprovação.</p>
+    <p>© <span id="ano"></span> AprovaCred. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<a href="#" class="whats js-whats" aria-label="WhatsApp">💬</a>
+
+<script>
+  // >>> TROQUE PELO SEU NÚMERO (DDI+DDD+número, só dígitos)
+  const WHATSAPP = "5562999999999";
+  // >>> Taxa mensal usada só na simulação ilustrativa
+  const TAXA_MES = 0.0299;
+
+  const valor = document.getElementById('valor');
+  const parcelas = document.getElementById('parcelas');
+  const valorOut = document.getElementById('valorOut');
+  const parcelaOut = document.getElementById('parcelaOut');
+  const brl = n => n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
+  const brl2 = n => n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+
+  function calcular(){
+    const v = +valor.value, n = +parcelas.value;
+    const p = v * (TAXA_MES * Math.pow(1+TAXA_MES,n)) / (Math.pow(1+TAXA_MES,n) - 1);
+    valorOut.textContent = brl(v);
+    parcelaOut.textContent = n + 'x de ' + brl2(p);
+    document.getElementById('btnSim').href = `cadastro.html?valor=${v}&parcelas=${n}`;
+    document.querySelectorAll('.js-whats').forEach(a => {
+      const texto = 'Olá! Quero saber mais sobre crédito e empréstimo.';
+      a.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(texto)}`;
+      a.target = '_blank'; a.rel = 'noopener';
+    });
+  }
+  valor.addEventListener('input',calcular);
+  parcelas.addEventListener('change',calcular);
+  calcular();
+  document.getElementById('ano').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
+
+</body></html>
