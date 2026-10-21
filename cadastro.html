@@ -1,71 +1,133 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cadastro | AprovaCred</title>
-<meta name="description" content="Preencha seu cadastro e receba o retorno de um consultor da AprovaCred.">
+<meta name="description" content="Faça seu cadastro em 3 etapas rápidas e receba o retorno de um consultor da AprovaCred.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --azul:#0b3d91;--azul-escuro:#082a66;--verde:#18b26b;--verde-escuro:#119355;
-  --bg:#f4f7fb;--texto:#1c2433;--cinza:#5b6578;--erro:#d93025;--raio:16px;
+  --azul:#0b3d91;--azul-2:#1456c8;--azul-escuro:#061f52;
+  --verde:#16b364;--verde-2:#0e9b53;--verde-claro:#e6f8ef;
+  --bg:#f5f8fd;--texto:#14203a;--cinza:#5a6780;--linha:#e2e8f3;--erro:#d93025;--raio:22px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Roboto,Arial,sans-serif;color:var(--texto);background:var(--bg);line-height:1.55;min-height:100vh}
+body{font-family:'Plus Jakarta Sans','Segoe UI',Roboto,Arial,sans-serif;color:var(--texto);background:var(--bg);line-height:1.55;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
-header{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.06)}
-.nav{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1100px;margin:0 auto;padding:0 20px}
-.logo{font-weight:800;font-size:1.4rem;color:var(--azul)}
-.logo span{color:var(--verde)}
-.voltar{color:var(--azul);font-weight:600;font-size:.9rem}
+svg{display:block}
 
-.topo{background:linear-gradient(160deg,var(--azul),var(--azul-escuro));color:#fff;padding:36px 20px 70px;text-align:center}
-.topo h1{font-size:1.7rem;margin-bottom:8px}
-.topo p{opacity:.92;max-width:520px;margin:0 auto}
+header{background:linear-gradient(165deg,var(--azul),var(--azul-escuro))}
+.nav{display:flex;align-items:center;justify-content:space-between;height:66px;max-width:1100px;margin:0 auto;padding:0 20px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.3rem;color:#fff}
+.logo i{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--verde),#4be09a);display:flex;align-items:center;justify-content:center}
+.logo b{color:#5ee9a8}
+.voltar{color:rgba(255,255,255,.85);font-weight:600;font-size:.88rem}
+.voltar:hover{color:#fff}
 
-.caixa{max-width:520px;margin:-44px auto 40px;padding:0 16px}
-.form,.sucesso{background:#fff;border-radius:var(--raio);padding:26px;box-shadow:0 12px 30px rgba(11,61,145,.18)}
-.resumo{background:var(--bg);border-radius:12px;padding:12px 16px;margin-bottom:18px;font-size:.92rem;color:var(--cinza);display:none}
+.topo{background:linear-gradient(165deg,var(--azul),var(--azul-escuro));color:#fff;padding:14px 20px 96px;text-align:center;position:relative;overflow:hidden}
+.topo::after{content:"";position:absolute;right:-90px;top:-60px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(94,233,168,.22),transparent 70%)}
+.topo h1{font-size:1.8rem;font-weight:800;letter-spacing:-.02em;margin-bottom:6px;position:relative}
+.topo p{opacity:.9;max-width:480px;margin:0 auto;position:relative;font-size:.96rem}
+
+.caixa{max-width:540px;margin:-66px auto 40px;padding:0 16px;position:relative;z-index:2}
+.cartao{background:#fff;border-radius:var(--raio);padding:26px 22px;box-shadow:0 24px 60px rgba(6,31,82,.22)}
+
+/* Progresso */
+.prog{display:flex;align-items:center;margin-bottom:22px}
+.prog .p{display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;font-size:.7rem;font-weight:700;color:#9aa5b8}
+.prog .p b{width:34px;height:34px;border-radius:50%;background:#e8edf6;color:#8793a8;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:.3s}
+.prog .p.on{color:var(--azul)}
+.prog .p.on b{background:var(--azul);color:#fff;box-shadow:0 6px 14px rgba(11,61,145,.35)}
+.prog .p.ok{color:var(--verde-2)}
+.prog .p.ok b{background:var(--verde);color:#fff}
+.prog .l{flex:1;height:4px;background:#e8edf6;border-radius:4px;margin:0 8px 20px;overflow:hidden}
+.prog .l div{height:100%;width:0;background:var(--verde);transition:width .4s}
+
+.resumo{display:none;background:linear-gradient(135deg,#f0f5ff,#eafaf2);border:1px solid var(--linha);border-radius:14px;padding:12px 16px;margin-bottom:18px;font-size:.88rem;color:var(--cinza)}
 .resumo strong{color:var(--azul)}
-.campo{margin-bottom:16px}
-label{display:block;font-weight:600;font-size:.9rem;margin-bottom:6px}
-input[type=text],input[type=email],input[type=tel],input[type=date]{width:100%;padding:13px;border:1.5px solid #cdd5e2;border-radius:10px;font-size:1rem;font-family:inherit;background:#fff}
-input[type=date]{-webkit-appearance:none;appearance:none;min-width:0;max-width:100%;display:block;text-align:left;min-height:50px}
-input[type=date]::-webkit-date-and-time-value{text-align:left}
-input:focus{outline:none;border-color:var(--azul)}
-.campo.invalido input{border-color:var(--erro)}
-.msg{display:none;color:var(--erro);font-size:.8rem;margin-top:4px}
-.campo.invalido .msg{display:block}
-.check{display:flex;gap:10px;align-items:flex-start;font-size:.82rem;color:var(--cinza);margin:6px 0 18px}
-.check input{margin-top:3px;accent-color:var(--verde);width:18px;height:18px;flex:0 0 18px}
-.check.invalido{color:var(--erro)}
-.btn{display:block;width:100%;background:var(--verde);color:#fff;font-weight:700;padding:15px;border-radius:50px;border:0;cursor:pointer;font-size:1.05rem;transition:.2s;text-align:center}
-.btn:hover{background:var(--verde-escuro)}
-.btn:disabled{opacity:.6;cursor:wait}
-.seguro{text-align:center;font-size:.78rem;color:var(--cinza);margin-top:12px}
-.erro-geral{display:none;background:#fdecea;color:var(--erro);padding:12px;border-radius:10px;font-size:.88rem;margin-bottom:14px}
+.etapa{display:none;animation:entra .35s ease}
+.etapa.on{display:block}
+@keyframes entra{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.etapa h2{font-size:1.2rem;color:var(--azul);font-weight:800;margin-bottom:4px}
+.etapa .sub{color:var(--cinza);font-size:.88rem;margin-bottom:18px}
 
-.carregando{display:none;background:#fff;border-radius:var(--raio);padding:34px 26px;box-shadow:0 12px 30px rgba(11,61,145,.18);text-align:center}
-.spinner{width:64px;height:64px;border:6px solid #e3e9f4;border-top-color:var(--verde);border-radius:50%;margin:0 auto 18px;animation:gira 1s linear infinite}
+.campo{margin-bottom:16px}
+label{display:block;font-weight:700;font-size:.86rem;margin-bottom:6px}
+input[type=text],input[type=email],input[type=tel],input[type=date]{width:100%;padding:14px;border:1.5px solid #d3dbe9;border-radius:12px;font-size:1rem;font-family:inherit;background:#fff;transition:.2s}
+input[type=date]{-webkit-appearance:none;appearance:none;min-width:0;max-width:100%;display:block;text-align:left;min-height:52px}
+input[type=date]::-webkit-date-and-time-value{text-align:left}
+input:focus{outline:none;border-color:var(--azul-2);box-shadow:0 0 0 4px rgba(20,86,200,.12)}
+.campo.invalido input{border-color:var(--erro);box-shadow:0 0 0 4px rgba(217,48,37,.1)}
+.msg{display:none;color:var(--erro);font-size:.8rem;margin-top:5px;font-weight:600}
+.campo.invalido .msg{display:block}
+
+/* Passo 1 */
+.valor{font-size:2.2rem;font-weight:800;color:var(--azul);letter-spacing:-.02em;line-height:1.15}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:50px;background:linear-gradient(90deg,var(--verde) var(--p,10%),#dde5f2 var(--p,10%));outline:none;margin:14px 0 6px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:#fff;border:4px solid var(--verde);box-shadow:0 3px 10px rgba(0,0,0,.25)}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:4px solid var(--verde)}
+.limites{display:flex;justify-content:space-between;font-size:.74rem;color:var(--cinza);margin-bottom:18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.chip{flex:1 0 auto;min-width:50px;border:1.5px solid var(--linha);background:#fff;border-radius:50px;padding:9px 12px;font-weight:700;font-size:.88rem;color:var(--cinza);cursor:pointer;transition:.2s;font-family:inherit}
+.chip.on{background:var(--verde-claro);border-color:var(--verde);color:var(--verde-2)}
+.tipos{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
+.tipo{border:1.5px solid var(--linha);background:#fff;border-radius:12px;padding:11px 8px;font-size:.82rem;font-weight:700;color:var(--cinza);cursor:pointer;transition:.2s;font-family:inherit}
+.tipo.on{background:var(--azul);border-color:var(--azul);color:#fff}
+.parc{background:linear-gradient(135deg,#f0f5ff,#eafaf2);border:1px solid var(--linha);border-radius:14px;padding:14px;text-align:center}
+.parc small{color:var(--cinza);font-weight:600}
+.parc strong{display:block;font-size:1.5rem;font-weight:800;color:var(--verde-2)}
+.rot{font-weight:700;font-size:.86rem;margin-bottom:2px}
+
+.check{display:flex;gap:10px;align-items:flex-start;font-size:.82rem;color:var(--cinza);margin:4px 0 6px}
+.check input{margin-top:3px;accent-color:var(--verde);width:19px;height:19px;flex:0 0 19px}
+.check label{font-weight:400;margin:0;font-size:.82rem}
+.check.invalido{color:var(--erro)}
+
+.botoes{display:flex;gap:10px;margin-top:22px}
+.btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--verde),var(--verde-2));color:#fff;font-weight:700;padding:15px;border-radius:50px;border:0;cursor:pointer;font-size:1.02rem;transition:.25s;box-shadow:0 8px 22px rgba(22,179,100,.35);font-family:inherit}
+.btn:hover{transform:translateY(-2px)}
+.btn.sec{flex:0 0 auto;background:#eef2f9;color:var(--azul);box-shadow:none;padding:15px 22px}
+.btn svg{width:18px;height:18px}
+.seguro{display:flex;align-items:center;justify-content:center;gap:7px;text-align:center;font-size:.78rem;color:var(--cinza);margin-top:16px}
+.seguro svg{width:15px;height:15px;color:var(--verde-2)}
+.erro-geral{display:none;background:#fdecea;color:var(--erro);padding:12px 14px;border-radius:12px;font-size:.88rem;margin-bottom:16px;font-weight:600}
+
+/* Carregando */
+.carregando{display:none;text-align:center;padding:14px 0}
+.spinner{width:68px;height:68px;border:6px solid #e3e9f4;border-top-color:var(--verde);border-radius:50%;margin:0 auto 18px;animation:gira 1s linear infinite}
 @keyframes gira{to{transform:rotate(360deg)}}
-.carregando h2{color:var(--azul);margin-bottom:6px}
-.carregando > p{color:var(--cinza);font-size:.92rem;margin-bottom:20px}
+.carregando h2{color:var(--azul);margin-bottom:6px;font-size:1.3rem}
+.carregando>p{color:var(--cinza);font-size:.92rem;margin-bottom:20px}
 .barra{height:8px;background:#e3e9f4;border-radius:50px;overflow:hidden;margin-bottom:22px}
 .barra div{height:100%;width:0;background:linear-gradient(90deg,var(--azul),var(--verde));border-radius:50px;transition:width .6s ease}
 .etapas{list-style:none;text-align:left;max-width:300px;margin:0 auto}
 .etapas li{display:flex;gap:10px;align-items:center;padding:8px 0;color:#9aa5b8;font-size:.95rem;transition:.3s}
-.etapas li .bola{width:22px;height:22px;border-radius:50%;border:2px solid #cdd5e2;display:flex;align-items:center;justify-content:center;font-size:.75rem;flex:0 0 22px}
-.etapas li.ativa{color:var(--azul);font-weight:600}
+.etapas li .bola{width:22px;height:22px;border-radius:50%;border:2px solid #cdd5e2;display:flex;align-items:center;justify-content:center;font-size:.75rem;flex:0 0 22px;color:transparent}
+.etapas li.ativa{color:var(--azul);font-weight:700}
 .etapas li.ativa .bola{border-color:var(--azul)}
-.etapas li.feita{color:var(--verde-escuro)}
+.etapas li.feita{color:var(--verde-2)}
 .etapas li.feita .bola{background:var(--verde);border-color:var(--verde);color:#fff}
+
+/* Sucesso */
 .sucesso{display:none;text-align:center}
-.sucesso .ok{font-size:3rem}
-.sucesso h2{color:var(--azul);margin:8px 0}
-.sucesso p{color:var(--cinza);margin-bottom:12px}
-.sucesso .btn{margin-top:16px;background:#25d366}
-.aviso{font-size:.75rem;color:var(--cinza);text-align:center;margin-top:16px}
+.check-gde{width:78px;height:78px;border-radius:50%;background:var(--verde-claro);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+.check-gde svg{width:40px;height:40px;color:var(--verde-2)}
+@keyframes pop{from{transform:scale(.3);opacity:0}to{transform:none;opacity:1}}
+.sucesso h2{color:var(--azul);font-size:1.45rem;margin-bottom:6px}
+.sucesso>p{color:var(--cinza);margin-bottom:6px;font-size:.95rem}
+.proto{display:inline-block;background:#f0f4fb;border:1px dashed #b9c6de;border-radius:10px;padding:6px 14px;font-weight:700;color:var(--azul);font-size:.85rem;margin:10px 0 18px;letter-spacing:.04em}
+.prox{text-align:left;background:var(--bg);border-radius:16px;padding:18px;margin:6px 0 16px}
+.prox h3{font-size:.95rem;color:var(--azul);margin-bottom:12px}
+.prox div{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;font-size:.9rem;color:var(--cinza)}
+.prox div:last-child{margin-bottom:0}
+.prox b{flex:0 0 26px;height:26px;border-radius:50%;background:var(--azul);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem}
+.prox strong{color:var(--texto);display:block}
+.aviso{font-size:.75rem;color:var(--cinza);text-align:center;margin-top:14px}
+.voltar-btn{display:inline-flex;margin-top:14px;font-weight:700;color:var(--azul);font-size:.9rem}
+
 footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px}
 </style>
 </head>
@@ -73,79 +135,150 @@ footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px
 
 <header>
   <div class="nav">
-    <a href="index.html" class="logo">Aprova<span>Cred</span></a>
-    <a href="index.html" class="voltar">← Voltar</a>
+    <a href="index.html" class="logo">
+      <i><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></i>
+      <span>Aprova<b>Cred</b></span>
+    </a>
+    <a href="index.html" class="voltar">← Voltar ao site</a>
   </div>
 </header>
 
 <div class="topo">
-  <h1>Faça seu cadastro</h1>
-  <p>Preencha seus dados. Um consultor vai analisar o seu perfil e retornar o contato.</p>
+  <h1 id="titulo">Falta pouco para sua análise</h1>
+  <p id="subtitulo">Preencha em 3 etapas rápidas. Um consultor vai analisar o seu perfil.</p>
 </div>
 
 <div class="caixa">
-  <form class="form" id="form" novalidate>
-    <div class="resumo" id="resumo"></div>
-    <div class="erro-geral" id="erroGeral"></div>
+  <div class="cartao">
 
-    <div class="campo" id="c-nome">
-      <label for="nome">Nome completo</label>
-      <input type="text" id="nome" autocomplete="name" placeholder="Seu nome completo">
-      <div class="msg">Informe nome e sobrenome.</div>
+    <div id="areaForm">
+      <div class="prog" id="prog">
+        <div class="p on" id="p1"><b>1</b>Pedido</div>
+        <div class="l"><div id="l1"></div></div>
+        <div class="p" id="p2"><b>2</b>Seus dados</div>
+        <div class="l"><div id="l2"></div></div>
+        <div class="p" id="p3"><b>3</b>Contato</div>
+      </div>
+
+      <div class="resumo" id="resumo"></div>
+      <div class="erro-geral" id="erroGeral"></div>
+
+      <form id="form" novalidate>
+        <!-- ETAPA 1 -->
+        <div class="etapa on" id="s1">
+          <h2>Seu pedido</h2>
+          <p class="sub">Ajuste o valor e o prazo que você deseja.</p>
+
+          <div class="rot">Tipo de crédito</div>
+          <div class="tipos" id="tipos" style="margin-top:8px">
+            <button type="button" class="tipo on" data-tipo="pessoal">Pessoal</button>
+            <button type="button" class="tipo" data-tipo="consignado">Consignado</button>
+            <button type="button" class="tipo" data-tipo="garantia">Com garantia</button>
+            <button type="button" class="tipo" data-tipo="negativados">Negativados</button>
+          </div>
+
+          <div class="rot">De quanto você precisa?</div>
+          <div class="valor" id="valorOut">R$ 5.000</div>
+          <input type="range" id="valor" min="500" max="50000" step="500" value="5000" aria-label="Valor desejado">
+          <div class="limites"><span>R$ 500</span><span>R$ 50.000</span></div>
+
+          <div class="rot" style="margin-bottom:8px">Em quantas parcelas?</div>
+          <div class="chips" id="chips">
+            <button type="button" class="chip" data-n="6">6x</button>
+            <button type="button" class="chip on" data-n="12">12x</button>
+            <button type="button" class="chip" data-n="24">24x</button>
+            <button type="button" class="chip" data-n="36">36x</button>
+            <button type="button" class="chip" data-n="48">48x</button>
+          </div>
+
+          <div class="parc"><small>Parcela estimada</small><strong id="parcelaOut">—</strong></div>
+          <p class="aviso" style="margin-top:10px">Estimativa ilustrativa. Condições finais dependem de análise.</p>
+        </div>
+
+        <!-- ETAPA 2 -->
+        <div class="etapa" id="s2">
+          <h2>Seus dados</h2>
+          <p class="sub">Precisamos confirmar quem é você.</p>
+
+          <div class="campo" id="c-nome">
+            <label for="nome">Nome completo</label>
+            <input type="text" id="nome" autocomplete="name" placeholder="Seu nome completo">
+            <div class="msg">Informe nome e sobrenome.</div>
+          </div>
+          <div class="campo" id="c-cpf">
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00" autocomplete="off">
+            <div class="msg">CPF inválido. Confira os números.</div>
+          </div>
+          <div class="campo" id="c-nasc">
+            <label for="nasc">Data de nascimento</label>
+            <input type="date" id="nasc" autocomplete="bday">
+            <div class="msg">Informe uma data válida (maiores de 18 anos).</div>
+          </div>
+        </div>
+
+        <!-- ETAPA 3 -->
+        <div class="etapa" id="s3">
+          <h2>Como falamos com você?</h2>
+          <p class="sub">O consultor usará esses contatos para retornar.</p>
+
+          <div class="campo" id="c-email">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" autocomplete="email" placeholder="voce@email.com">
+            <div class="msg">Informe um e-mail válido.</div>
+          </div>
+          <div class="campo" id="c-tel">
+            <label for="tel">Telefone com DDD</label>
+            <input type="tel" id="tel" inputmode="numeric" maxlength="15" autocomplete="tel" placeholder="(00) 00000-0000">
+            <div class="msg">Informe DDD e número válidos.</div>
+          </div>
+          <div class="check" id="c-lgpd">
+            <input type="checkbox" id="lgpd">
+            <label for="lgpd">Concordo que a AprovaCred use meus dados para analisar meu pedido de crédito e entrar em contato, conforme a LGPD.</label>
+          </div>
+        </div>
+
+        <div class="botoes">
+          <button type="button" class="btn sec" id="btnVoltar" style="display:none">Voltar</button>
+          <button type="submit" class="btn" id="btnProx">Continuar
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </form>
+
+      <div class="seguro">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+        Seus dados são usados apenas para a análise do seu pedido.
+      </div>
     </div>
 
-    <div class="campo" id="c-cpf">
-      <label for="cpf">CPF</label>
-      <input type="text" id="cpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00">
-      <div class="msg">CPF inválido.</div>
+    <div class="carregando" id="carregando">
+      <div class="spinner"></div>
+      <h2>Processando seu cadastro</h2>
+      <p>Aguarde um instante, não feche esta página.</p>
+      <div class="barra"><div id="progresso"></div></div>
+      <ul class="etapas">
+        <li id="e1"><span class="bola">✓</span>Validando seus dados</li>
+        <li id="e2"><span class="bola">✓</span>Enviando seu cadastro</li>
+        <li id="e3"><span class="bola">✓</span>Encaminhando para a análise</li>
+      </ul>
     </div>
 
-    <div class="campo" id="c-nasc">
-      <label for="nasc">Data de nascimento</label>
-      <input type="date" id="nasc" autocomplete="bday">
-      <div class="msg" id="msgNasc">Informe uma data válida (maiores de 18 anos).</div>
+    <div class="sucesso" id="sucesso">
+      <div class="check-gde"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
+      <h2>Cadastro recebido!</h2>
+      <p>Obrigado, <strong id="sNome"></strong>. Seu pedido foi enviado e está na fila para análise.</p>
+      <div class="proto">PROTOCOLO <span id="sProto"></span></div>
+      <div class="prox">
+        <h3>O que acontece agora</h3>
+        <div><b>1</b><span><strong>Análise do seu perfil</strong>Nossa equipe avalia as informações enviadas.</span></div>
+        <div><b>2</b><span><strong>Contato do consultor</strong>Você será chamado pelo telefone ou e-mail informados. Atenda ligações de números desconhecidos.</span></div>
+        <div><b>3</b><span><strong>Condições disponíveis</strong>O consultor apresenta as opções e tira suas dúvidas, sem compromisso.</span></div>
+      </div>
+      <p class="aviso">O recebimento do cadastro não significa aprovação. O crédito está sujeito à análise e aprovação.</p>
+      <a href="index.html" class="voltar-btn">← Voltar ao site</a>
     </div>
 
-    <div class="campo" id="c-email">
-      <label for="email">E-mail</label>
-      <input type="email" id="email" autocomplete="email" placeholder="voce@email.com">
-      <div class="msg">Informe um e-mail válido.</div>
-    </div>
-
-    <div class="campo" id="c-tel">
-      <label for="tel">Telefone / WhatsApp</label>
-      <input type="tel" id="tel" inputmode="numeric" maxlength="15" autocomplete="tel" placeholder="(00) 00000-0000">
-      <div class="msg">Informe DDD e número válidos.</div>
-    </div>
-
-    <div class="check" id="c-lgpd">
-      <input type="checkbox" id="lgpd">
-      <label for="lgpd" style="font-weight:400;margin:0">Concordo que a AprovaCred use meus dados para analisar meu pedido de crédito e entrar em contato, conforme a LGPD.</label>
-    </div>
-
-    <button type="submit" class="btn" id="enviar">Enviar cadastro</button>
-    <p class="seguro">🔒 Seus dados são usados apenas para a análise do seu pedido.</p>
-  </form>
-
-  <div class="carregando" id="carregando">
-    <div class="spinner"></div>
-    <h2>Processando seu cadastro</h2>
-    <p>Aguarde um instante, não feche esta página.</p>
-    <div class="barra"><div id="progresso"></div></div>
-    <ul class="etapas">
-      <li id="e1"><span class="bola">✓</span>Validando seus dados</li>
-      <li id="e2"><span class="bola">✓</span>Enviando seu cadastro</li>
-      <li id="e3"><span class="bola">✓</span>Encaminhando para a análise</li>
-    </ul>
-  </div>
-
-  <div class="sucesso" id="sucesso">
-    <div class="ok">✅</div>
-    <h2>Cadastro recebido!</h2>
-    <p>Obrigado, <strong id="sNome"></strong>. Recebemos seus dados e nossa equipe vai analisar o seu perfil.</p>
-    <p>Um consultor entrará em contato pelo telefone ou e-mail informados para falar sobre as condições disponíveis.</p>
-    <a href="#" class="btn" id="btnZap" target="_blank" rel="noopener">Falar agora no WhatsApp</a>
-    <p class="aviso">O recebimento do cadastro não significa aprovação. O crédito está sujeito à análise e aprovação.</p>
   </div>
 </div>
 
@@ -155,28 +288,38 @@ footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px
 </footer>
 
 <script>
-  // >>> CONFIGURE ANTES DE PUBLICAR
-  // 1) Crie um formulário gratuito em formspree.io e cole aqui a URL (https://formspree.io/f/xxxxxxx)
   const FORM_ENDPOINT = "https://formspree.io/f/mvkzebor";
-  // 2) Seu WhatsApp (DDI+DDD+número, só dígitos)
-  const WHATSAPP = "5562999999999";
+  const TAXA_MES = 0.0299; // só para a estimativa ilustrativa
 
   const $ = id => document.getElementById(id);
   const params = new URLSearchParams(location.search);
+  const NOMES = {pessoal:'Empréstimo pessoal', consignado:'Consignado', garantia:'Crédito com garantia', negativados:'Crédito para negativados'};
+  const brl  = n => n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
+  const brl2 = n => n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 
-  // Resumo do pedido vindo do simulador / da página de negativados
-  (function(){
-    const r = $('resumo'), v = +params.get('valor'), n = +params.get('parcelas');
-    if (v && n){
-      r.innerHTML = `Seu pedido: <strong>${v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0})}</strong> em <strong>${n}x</strong>`;
-      r.style.display = 'block';
-    } else if (params.get('tipo') === 'negativados'){
-      r.innerHTML = 'Interesse: <strong>Crédito para negativados</strong>';
-      r.style.display = 'block';
-    }
-  })();
+  // ---------- Estado do pedido (vem do simulador) ----------
+  const estado = {
+    valor: Math.min(50000, Math.max(500, Math.round((+params.get('valor') || 5000)/500)*500)),
+    n: [6,12,24,36,48].includes(+params.get('parcelas')) ? +params.get('parcelas') : 12,
+    tipo: NOMES[params.get('tipo')] ? params.get('tipo') : 'pessoal'
+  };
+  const parcelaDe = (v,n) => v*(TAXA_MES*Math.pow(1+TAXA_MES,n))/(Math.pow(1+TAXA_MES,n)-1);
 
-  // Máscaras
+  function pintarPedido(){
+    $('valor').value = estado.valor;
+    const pct = (estado.valor-500)/(50000-500)*100;
+    $('valor').style.setProperty('--p', pct+'%');
+    $('valorOut').textContent = brl(estado.valor);
+    $('parcelaOut').textContent = estado.n+'x de '+brl2(parcelaDe(estado.valor,estado.n));
+    document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', +c.dataset.n===estado.n));
+    document.querySelectorAll('.tipo').forEach(t => t.classList.toggle('on', t.dataset.tipo===estado.tipo));
+  }
+  $('valor').addEventListener('input', e => { estado.valor = +e.target.value; pintarPedido(); });
+  $('chips').addEventListener('click', e => { const c = e.target.closest('.chip'); if(c){ estado.n = +c.dataset.n; pintarPedido(); }});
+  $('tipos').addEventListener('click', e => { const t = e.target.closest('.tipo'); if(t){ estado.tipo = t.dataset.tipo; pintarPedido(); }});
+  pintarPedido();
+
+  // ---------- Máscaras ----------
   $('cpf').addEventListener('input', e => {
     let v = e.target.value.replace(/\D/g,'').slice(0,11);
     v = v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2');
@@ -190,15 +333,14 @@ footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px
     e.target.value = v;
   });
 
-  // Validações
+  // ---------- Validações ----------
   function cpfValido(cpf){
     cpf = cpf.replace(/\D/g,'');
     if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
     for (let t = 9; t < 11; t++){
       let soma = 0;
       for (let i = 0; i < t; i++) soma += +cpf[i] * (t + 1 - i);
-      const dig = ((soma * 10) % 11) % 10;
-      if (dig !== +cpf[t]) return false;
+      if (((soma * 10) % 11) % 10 !== +cpf[t]) return false;
     }
     return true;
   }
@@ -211,29 +353,59 @@ footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px
     if (m < 0 || (m === 0 && hoje.getDate() < n.getDate())) idade--;
     return idade >= 18 && idade <= 110;
   }
-  function marcar(id, ok){
-    $(id).classList.toggle('invalido', !ok);
-    return ok;
-  }
+  const marcar = (id, ok) => { $(id).classList.toggle('invalido', !ok); return ok; };
 
-  $('form').addEventListener('submit', async e => {
-    e.preventDefault();
-    $('erroGeral').style.display = 'none';
-
-    const nome = $('nome').value.trim().replace(/\s+/g,' ');
-    const ok = [
-      marcar('c-nome', nome.split(' ').length >= 2 && nome.length >= 5),
-      marcar('c-cpf', cpfValido($('cpf').value)),
-      marcar('c-nasc', maiorDeIdade($('nasc').value)),
+  const validadores = {
+    1: () => true,
+    2: () => {
+      const nome = $('nome').value.trim().replace(/\s+/g,' ');
+      return [
+        marcar('c-nome', nome.split(' ').length >= 2 && nome.length >= 5),
+        marcar('c-cpf', cpfValido($('cpf').value)),
+        marcar('c-nasc', maiorDeIdade($('nasc').value))
+      ].every(Boolean);
+    },
+    3: () => [
       marcar('c-email', /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test($('email').value.trim())),
       marcar('c-tel', $('tel').value.replace(/\D/g,'').length >= 10),
       marcar('c-lgpd', $('lgpd').checked)
-    ].every(Boolean);
-    if (!ok){
-      const primeiro = document.querySelector('.invalido');
+    ].every(Boolean)
+  };
+
+  // ---------- Navegação entre etapas ----------
+  let etapaAtual = 1;
+  function irPara(n){
+    etapaAtual = n;
+    [1,2,3].forEach(i => {
+      $('s'+i).classList.toggle('on', i===n);
+      const p = $('p'+i);
+      p.className = 'p' + (i===n ? ' on' : (i<n ? ' ok' : ''));
+      p.querySelector('b').textContent = i<n ? '✓' : i;
+    });
+    $('l1').style.width = n>1 ? '100%' : '0';
+    $('l2').style.width = n>2 ? '100%' : '0';
+    $('btnVoltar').style.display = n>1 ? 'block' : 'none';
+    $('btnProx').firstChild.textContent = n===3 ? 'Enviar cadastro ' : 'Continuar ';
+    $('erroGeral').style.display = 'none';
+
+    const r = $('resumo');
+    if (n>1){
+      r.innerHTML = `Seu pedido: <strong>${brl(estado.valor)}</strong> em <strong>${estado.n}x</strong> • ${NOMES[estado.tipo]}`;
+      r.style.display = 'block';
+    } else r.style.display = 'none';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  $('btnVoltar').addEventListener('click', () => irPara(etapaAtual-1));
+
+  // ---------- Envio ----------
+  $('form').addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!validadores[etapaAtual]()){
+      const primeiro = document.querySelector('#s'+etapaAtual+' .invalido');
       if (primeiro) primeiro.scrollIntoView({behavior:'smooth',block:'center'});
       return;
     }
+    if (etapaAtual < 3){ irPara(etapaAtual+1); return; }
 
     if (FORM_ENDPOINT.includes('SEU_ID_AQUI')){
       $('erroGeral').textContent = 'Formulário ainda não configurado: defina FORM_ENDPOINT no arquivo cadastro.html.';
@@ -241,38 +413,38 @@ footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px
       return;
     }
 
+    const nome = $('nome').value.trim().replace(/\s+/g,' ');
+    const protocolo = 'AC-' + Date.now().toString(36).toUpperCase().slice(-6);
     const dados = {
+      protocolo,
       nome,
       cpf: $('cpf').value,
       nascimento: $('nasc').value,
       email: $('email').value.trim(),
       telefone: $('tel').value,
-      valor_solicitado: params.get('valor') || '',
-      parcelas: params.get('parcelas') || '',
-      interesse: params.get('tipo') || '',
+      tipo_credito: NOMES[estado.tipo],
+      valor_solicitado: estado.valor,
+      parcelas: estado.n,
       consentimento_lgpd: 'sim',
-      enviado_em: new Date().toLocaleString('pt-BR')
+      enviado_em: new Date().toLocaleString('pt-BR'),
+      _subject: 'Novo cadastro AprovaCred - ' + nome
     };
 
-    // Tela de carregamento: cada etapa corresponde a algo que realmente acontece
     const espera = ms => new Promise(r => setTimeout(r, ms));
     const etapa = (n, pct) => {
-      for (let i = 1; i <= 3; i++){
-        const li = $('e' + i);
-        li.className = i < n ? 'feita' : (i === n ? 'ativa' : '');
-      }
+      for (let i = 1; i <= 3; i++) $('e'+i).className = i < n ? 'feita' : (i === n ? 'ativa' : '');
       $('progresso').style.width = pct + '%';
     };
 
-    $('form').style.display = 'none';
+    $('areaForm').style.display = 'none';
     $('carregando').style.display = 'block';
+    $('titulo').textContent = 'Processando seu cadastro';
+    $('subtitulo').textContent = 'Só mais um instante.';
     window.scrollTo({top:0,behavior:'smooth'});
     const inicio = Date.now();
 
     try{
-      etapa(1, 20);
-      await espera(900);
-
+      etapa(1, 20); await espera(900);
       etapa(2, 55);
       const r = await fetch(FORM_ENDPOINT, {
         method:'POST',
@@ -281,22 +453,22 @@ footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px
       });
       if (!r.ok) throw new Error('falha');
       await espera(900);
-
-      etapa(3, 90);
-      await espera(Math.max(900, 3600 - (Date.now() - inicio)));
-
-      etapa(4, 100);
-      await espera(500);
+      etapa(3, 90); await espera(Math.max(900, 3600-(Date.now()-inicio)));
+      etapa(4, 100); await espera(500);
 
       $('carregando').style.display = 'none';
       $('sNome').textContent = nome.split(' ')[0];
-      $('btnZap').href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent('Olá! Acabei de enviar meu cadastro no site. Meu nome é ' + nome + '.')}`;
+      $('sProto').textContent = protocolo;
+      $('titulo').textContent = 'Tudo certo!';
+      $('subtitulo').textContent = 'Seu cadastro foi enviado com sucesso.';
       $('sucesso').style.display = 'block';
       window.scrollTo({top:0,behavior:'smooth'});
     }catch(err){
       $('carregando').style.display = 'none';
-      $('form').style.display = 'block';
-      $('erroGeral').textContent = 'Não foi possível enviar agora. Tente novamente em instantes.';
+      $('areaForm').style.display = 'block';
+      $('titulo').textContent = 'Falta pouco para sua análise';
+      $('subtitulo').textContent = 'Preencha em 3 etapas rápidas. Um consultor vai analisar o seu perfil.';
+      $('erroGeral').textContent = 'Não foi possível enviar agora. Confira sua conexão e tente novamente.';
       $('erroGeral').style.display = 'block';
       window.scrollTo({top:0,behavior:'smooth'});
     }
@@ -304,5 +476,3 @@ footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px
 </script>
 </body>
 </html>
-
-</body></html>
