@@ -141,6 +141,13 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .co-preco strong{font-size:1.8rem;font-weight:800;color:var(--verde-2);letter-spacing:-.02em}
 .checkout .btn{width:100%;flex:none;margin-top:12px}
 .co-seg{font-size:.74rem;color:var(--cinza);text-align:center;margin-top:10px}
+.pix-box{display:none;margin-top:14px;background:#fff;border:1px solid var(--linha);border-radius:16px;padding:18px 16px;text-align:center;animation:entra .35s ease}
+.pix-box h4{color:var(--azul);font-size:1.05rem;margin-bottom:6px}
+.pix-passos{font-size:.85rem;color:var(--cinza);margin-bottom:14px}
+.pix-qr{display:flex;justify-content:center;margin-bottom:14px}
+.pix-qr img,.pix-qr canvas{border:8px solid #fff;box-shadow:0 0 0 1px var(--linha);border-radius:8px}
+.pix-box textarea{width:100%;font-size:.72rem;font-family:ui-monospace,Menlo,Consolas,monospace;border:1.5px solid #d3dbe9;border-radius:10px;padding:10px;resize:none;color:var(--cinza);background:#f7f9fd;margin-bottom:10px;word-break:break-all}
+.pix-ok{font-size:.8rem;color:var(--cinza);margin-top:12px}
 footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px}
 </style>
 </head>
@@ -299,10 +306,20 @@ footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px
           <label for="termos">Entendo que a assessoria é um <strong>serviço pago</strong> e que ela <strong>não garante a aprovação do crédito</strong> nem o valor liberado. Posso desistir em até 7 dias corridos após o pagamento, conforme o Código de Defesa do Consumidor.</label>
         </div>
         <div class="erro-geral" id="erroPag"></div>
-        <button type="button" class="btn" id="btnPagar">Pagar R$ 47,95 com segurança
+        <button type="button" class="btn" id="btnPagar">Pagar R$ 47,95 com Pix
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
-        <p class="co-seg">🔒 Pagamento em ambiente seguro do Asaas. Não armazenamos dados do seu cartão.</p>
+
+        <div class="pix-box" id="pixBox">
+          <h4>Pague com Pix</h4>
+          <p class="pix-passos">Abra o app do seu banco, escolha <strong>Pix → Pix Copia e Cola</strong> (ou leia o QR Code) e confira se o valor é <strong>R$ 47,95</strong>.</p>
+          <div class="pix-qr" id="pixQr"></div>
+          <textarea id="pixCodigo" readonly rows="4" aria-label="Código Pix copia e cola"></textarea>
+          <button type="button" class="btn" id="btnCopiar">Copiar código Pix</button>
+          <p class="pix-ok">Depois de pagar, nossa equipe confirma o pagamento e o seu consultor entra em contato pelo telefone ou e-mail informados.</p>
+        </div>
+
+        <p class="co-seg">🔒 Pix para o CNPJ 62.810.802/0001-14. Confira o nome do recebedor no app do banco antes de confirmar.</p>
       </div>
 
       <div class="prox">
@@ -323,12 +340,43 @@ footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px
   Serviço de assessoria (R$ 47,95). Não somos instituição financeira e não garantimos aprovação de crédito.
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
   const FORM_ENDPOINT = "https://formspree.io/f/mvkzebor";
   const TAXA_MES = 0.0299; // só para a estimativa ilustrativa
 
-  // >>> LINK DE PAGAMENTO DO ASAAS (R$ 47,95). Veja como criar nas instruções.
-  const PAGAMENTO_URL = "https://www.asaas.com/c/SEU_LINK_AQUI";
+  // ---------- PAGAMENTO ----------
+  // Pix estático (valor fixo). Confira nome e cidade: devem ser os da sua empresa.
+  const PIX = {
+    chave:  "62810802000114",           // chave Pix (CNPJ, só dígitos)
+    nome:   "BASE NEGOCIOS E SERVICOS", // até 25 caracteres, sem acento
+    cidade: "EUSEBIO",                  // até 15 caracteres, sem acento
+    valor:  "47.95"
+  };
+  // Opcional: se um dia tiver link de checkout reutilizável (Asaas, gateway etc.),
+  // cole aqui e o botão passa a abrir o link no lugar do Pix.
+  const PAGAMENTO_URL = "";
+
+  function crc16(s){
+    let c = 0xFFFF;
+    for (let i = 0; i < s.length; i++){
+      c ^= s.charCodeAt(i) << 8;
+      for (let j = 0; j < 8; j++) c = (c & 0x8000) ? ((c << 1) ^ 0x1021) & 0xFFFF : (c << 1) & 0xFFFF;
+    }
+    return c.toString(16).toUpperCase().padStart(4,'0');
+  }
+  const campo = (id, v) => id + String(v.length).padStart(2,'0') + v;
+  function gerarPix(txid){
+    const semAcento = t => t.normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase();
+    const conta = campo('00','br.gov.bcb.pix') + campo('01', PIX.chave);
+    const p =
+      campo('00','01') + campo('01','11') + campo('26', conta) +
+      campo('52','0000') + campo('53','986') + campo('54', PIX.valor) + campo('58','BR') +
+      campo('59', semAcento(PIX.nome).slice(0,25)) + campo('60', semAcento(PIX.cidade).slice(0,15)) +
+      campo('62', campo('05', (txid || '***').replace(/[^A-Za-z0-9]/g,'').slice(0,25) || '***')) +
+      '6304';
+    return p + crc16(p);
+  }
 
   const $ = id => document.getElementById(id);
   const params = new URLSearchParams(location.search);
@@ -441,12 +489,24 @@ footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px
     const erro = $('erroPag');
     erro.style.display = 'none';
     if (!marcar('c-termos', $('termos').checked)) return;
-    if (PAGAMENTO_URL.includes('SEU_LINK_AQUI')){
-      erro.textContent = 'Pagamento ainda não configurado: defina PAGAMENTO_URL no arquivo cadastro.html.';
-      erro.style.display = 'block';
-      return;
-    }
-    window.location.href = PAGAMENTO_URL;
+    if (PAGAMENTO_URL){ window.location.href = PAGAMENTO_URL; return; }
+
+    const codigo = gerarPix(window.protocoloAtual);
+    $('pixCodigo').value = codigo;
+    $('pixBox').style.display = 'block';
+    $('btnPagar').style.display = 'none';
+    const qr = $('pixQr'); qr.innerHTML = '';
+    try{
+      if (window.QRCode) new QRCode(qr, {text:codigo, width:200, height:200, correctLevel:QRCode.CorrectLevel.M});
+    }catch(e){}
+    $('pixBox').scrollIntoView({behavior:'smooth',block:'center'});
+  });
+  $('btnCopiar').addEventListener('click', async () => {
+    const t = $('pixCodigo').value;
+    try{ await navigator.clipboard.writeText(t); }
+    catch(e){ $('pixCodigo').select(); document.execCommand('copy'); }
+    $('btnCopiar').textContent = '✓ Código copiado!';
+    setTimeout(() => $('btnCopiar').textContent = 'Copiar código Pix', 2500);
   });
 
   // ---------- Envio ----------
@@ -511,6 +571,7 @@ footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px
       $('carregando').style.display = 'none';
       $('sNome').textContent = nome.split(' ')[0];
       $('sProto').textContent = protocolo;
+      window.protocoloAtual = protocolo;
       $('titulo').textContent = 'Tudo certo!';
       $('subtitulo').textContent = 'Seu cadastro foi enviado com sucesso.';
       $('sucesso').style.display = 'block';
