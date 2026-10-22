@@ -128,6 +128,19 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .aviso{font-size:.75rem;color:var(--cinza);text-align:center;margin-top:14px}
 .voltar-btn{display:inline-flex;margin-top:14px;font-weight:700;color:var(--azul);font-size:.9rem}
 
+.nota{background:#fff8e6;border:1px solid #f5dfa0;color:#6b5311;border-radius:12px;padding:11px 14px;font-size:.82rem;margin-bottom:16px;line-height:1.45}
+.nota strong{color:#4d3a05}
+.checkout{text-align:left;border:2px solid var(--verde);border-radius:18px;padding:20px 18px;margin:4px 0 14px;background:linear-gradient(180deg,#f4fcf8,#fff)}
+.co-tag{display:inline-block;background:var(--verde);color:#fff;font-size:.68rem;font-weight:800;letter-spacing:.08em;padding:4px 11px;border-radius:50px;margin-bottom:8px}
+.checkout h3{color:var(--azul);font-size:1.12rem;font-weight:800;margin-bottom:12px}
+.co-lista{list-style:none;margin-bottom:16px;display:grid;gap:9px}
+.co-lista li{display:flex;gap:10px;font-size:.9rem;color:var(--texto);align-items:flex-start}
+.co-lista svg{flex:0 0 20px;width:20px;height:20px;color:var(--verde-2);margin-top:1px}
+.co-preco{display:flex;align-items:baseline;justify-content:space-between;background:#fff;border:1px solid var(--linha);border-radius:14px;padding:12px 16px;margin-bottom:14px}
+.co-preco small{color:var(--cinza);font-weight:600;font-size:.82rem}
+.co-preco strong{font-size:1.8rem;font-weight:800;color:var(--verde-2);letter-spacing:-.02em}
+.checkout .btn{width:100%;flex:none;margin-top:12px}
+.co-seg{font-size:.74rem;color:var(--cinza);text-align:center;margin-top:10px}
 footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px}
 </style>
 </head>
@@ -160,6 +173,7 @@ footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px
         <div class="p" id="p3"><b>3</b>Contato</div>
       </div>
 
+      <div class="nota"><strong>O cadastro é gratuito.</strong> Depois de enviá-lo, você poderá contratar a assessoria pessoal da AprovaCred por <strong>R$ 47,95</strong>. A AprovaCred não concede crédito e não garante aprovação.</div>
       <div class="resumo" id="resumo"></div>
       <div class="erro-geral" id="erroGeral"></div>
 
@@ -267,15 +281,37 @@ footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px
     <div class="sucesso" id="sucesso">
       <div class="check-gde"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
       <h2>Cadastro recebido!</h2>
-      <p>Obrigado, <strong id="sNome"></strong>. Seu pedido foi enviado e está na fila para análise.</p>
+      <p>Obrigado, <strong id="sNome"></strong>. Seus dados foram enviados. Falta só um passo para iniciar sua assessoria.</p>
       <div class="proto">PROTOCOLO <span id="sProto"></span></div>
-      <div class="prox">
-        <h3>O que acontece agora</h3>
-        <div><b>1</b><span><strong>Análise do seu perfil</strong>Nossa equipe avalia as informações enviadas.</span></div>
-        <div><b>2</b><span><strong>Contato do consultor</strong>Você será chamado pelo telefone ou e-mail informados. Atenda ligações de números desconhecidos.</span></div>
-        <div><b>3</b><span><strong>Condições disponíveis</strong>O consultor apresenta as opções e tira suas dúvidas, sem compromisso.</span></div>
+
+      <div class="checkout" id="checkout">
+        <span class="co-tag">ÚLTIMO PASSO</span>
+        <h3>Ative sua assessoria pessoal</h3>
+        <ul class="co-lista">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>Consultor dedicado ao seu caso</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>Análise do seu perfil e orientação personalizada</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>Apoio na busca pela melhor opção de crédito</li>
+        </ul>
+        <div class="co-preco"><small>Valor único</small><strong>R$ 47,95</strong></div>
+
+        <div class="check" id="c-termos">
+          <input type="checkbox" id="termos">
+          <label for="termos">Entendo que a assessoria é um <strong>serviço pago</strong> e que ela <strong>não garante a aprovação do crédito</strong> nem o valor liberado. Posso desistir em até 7 dias corridos após o pagamento, conforme o Código de Defesa do Consumidor.</label>
+        </div>
+        <div class="erro-geral" id="erroPag"></div>
+        <button type="button" class="btn" id="btnPagar">Pagar R$ 47,95 com segurança
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <p class="co-seg">🔒 Pagamento em ambiente seguro do Asaas. Não armazenamos dados do seu cartão.</p>
       </div>
-      <p class="aviso">O recebimento do cadastro não significa aprovação. O crédito está sujeito à análise e aprovação.</p>
+
+      <div class="prox">
+        <h3>O que acontece depois do pagamento</h3>
+        <div><b>1</b><span><strong>Confirmação</strong>Você recebe a confirmação do pagamento.</span></div>
+        <div><b>2</b><span><strong>Contato do consultor</strong>Ele chama você pelo telefone ou e-mail informados. Atenda ligações de números desconhecidos.</span></div>
+        <div><b>3</b><span><strong>Orientação personalizada</strong>Você e o consultor definem os próximos passos para buscar o crédito.</span></div>
+      </div>
+      <p class="aviso">A assessoria não garante a aprovação do crédito. As condições, taxas e prazos dependem da instituição financeira e da análise de crédito.</p>
       <a href="index.html" class="voltar-btn">← Voltar ao site</a>
     </div>
 
@@ -284,12 +320,15 @@ footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px
 
 <footer>
   AprovaCred • [Razão social] • CNPJ 00.000.000/0001-00<br>
-  Crédito sujeito à análise e aprovação.
+  Serviço de assessoria (R$ 47,95). Não somos instituição financeira e não garantimos aprovação de crédito.
 </footer>
 
 <script>
   const FORM_ENDPOINT = "https://formspree.io/f/mvkzebor";
   const TAXA_MES = 0.0299; // só para a estimativa ilustrativa
+
+  // >>> LINK DE PAGAMENTO DO ASAAS (R$ 47,95). Veja como criar nas instruções.
+  const PAGAMENTO_URL = "https://www.asaas.com/c/SEU_LINK_AQUI";
 
   const $ = id => document.getElementById(id);
   const params = new URLSearchParams(location.search);
@@ -396,6 +435,19 @@ footer{text-align:center;font-size:.78rem;color:var(--cinza);padding:0 20px 30px
     window.scrollTo({top:0,behavior:'smooth'});
   }
   $('btnVoltar').addEventListener('click', () => irPara(etapaAtual-1));
+
+  // ---------- Pagamento da assessoria ----------
+  $('btnPagar').addEventListener('click', () => {
+    const erro = $('erroPag');
+    erro.style.display = 'none';
+    if (!marcar('c-termos', $('termos').checked)) return;
+    if (PAGAMENTO_URL.includes('SEU_LINK_AQUI')){
+      erro.textContent = 'Pagamento ainda não configurado: defina PAGAMENTO_URL no arquivo cadastro.html.';
+      erro.style.display = 'block';
+      return;
+    }
+    window.location.href = PAGAMENTO_URL;
+  });
 
   // ---------- Envio ----------
   $('form').addEventListener('submit', async e => {
